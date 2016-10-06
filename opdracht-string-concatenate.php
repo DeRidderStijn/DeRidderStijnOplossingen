@@ -1,7 +1,7 @@
 <?php
 $voornaam = 'Stijn';
 $familienaam ='De Ridder';
-$volledigenaam = $voornaam . ' ' . $familienaam;
+$volledigenaam = $voornaam . ' '. $familienaam;
 ?>
 
 <!DOCTYPE html>
