@@ -44,14 +44,16 @@ if (isset($_GET["id"]))
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Comments</title>
+	<title>Get</title>
 </head>
 
 <body>
 	<?php
    		foreach($artikels as $artikel)
    			{
-   				echo ("<h3>" . $artikel["titel"] . "</h3>");
+   				?>
+   				<h3> <?= $artikel["titel"] ;?> </h3>
+   				<?php
    				echo ("<img src=' images/". $artikel["image"] . "' alt='" . $artikel["beschrijving"] . "'>");
    				//echo ("<p>" . substr($artikel["inhoud"],0,50) . "...<br><a href='index.php?id=0'> lees meer </a> <p>");
    				if ($id == $artikel["key"])
@@ -61,8 +63,9 @@ if (isset($_GET["id"]))
    				else
    				{
    					echo ("<p>"	. substr($artikel["text"],0,50) . "...<br><a href='get.php?id=" . ($artikel["key"]) . "'> lees meer </a> </p>");
-   				}
-   				echo ("<p>" . $artikel["datum"] . "<p>");
+   				}?>
+   					<p> <?= $artikel["datum"] ;?><p>
+   				<?php
    			}
    	?>
 </body>
