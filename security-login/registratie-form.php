@@ -2,6 +2,7 @@
 	session_start();
 	$email = "";
 	$pass = "";
+	$messageContainer;
 	if ( isset( $_SESSION["registratie"]))
 	{	
 		$email = $_SESSION["registratie"]["email"];
@@ -9,7 +10,7 @@
 		echo "fluffy kittens parade";
 		if (isset($_SESSION["registratie"]["error"]))
 		{
-			echo "foutjes ";
+			$messageContainer = $_SESSION["registratie"]["error"];	
 		}
 	}
 ?>
@@ -24,6 +25,7 @@
 
 <body>
 	<h1>Registreren</h1>
+	<p> <?= $messageContainer ;?></p>
 	<form action="registratie-process.php" method="POST">
 		<label>e-mail</label>
 		<input type="text" id="email" name="email" value="<?= $email ?>"><br>

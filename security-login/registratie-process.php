@@ -6,14 +6,14 @@ $password = "";
 $messageContainer = "";
 	if ( isset( $_POST["submit"]))
 	{
-		$email		=	$_POST[ 'email' ];
+		$email		= $_SESSION["registratie"]["email"] = $_POST[ 'email' ];
 		$password	=	$_POST[ 'paswoord' ];
 		if (filter_var($email, FILTER_VALIDATE_EMAIL))
 		{
 			$_SESSION["registratie"]["error"] = "";
 			try
 			{
-				$db = new PDO('mysql:host=localhost;dbname=bieren', 'root', 'root');
+				$db = new PDO('mysql:host=localhost;dbname=opdracht-security-login', 'root', 'root');
 
 				$querystring = 	'SELECT * 
 									FROM users 
@@ -22,13 +22,20 @@ $messageContainer = "";
 				$statement->bindParam(':email', $email);
 				$statement->execute();
 
-				var_dump($statement->fetch());
-				$bieren   =  array();
 			    while ( $row = $statement->fetch( PDO::FETCH_ASSOC ) )
 			    {
-			    	$mails[]    =  $row;
-			    	echo "lol";
+			    	$checkMails[]    =  $row;
 			    }
+			    if (isset($checkMails))
+			    {
+			    	$_SESSION["registratie"]["error"] = "Dit e-mail adres bestaat al!";
+			    	header('Location: registratie-form.php');
+			    }
+			    else
+			    {
+			    	echo "miauw";
+			    }
+			    
 			}
 			catch(PDOException $e)
 			{
