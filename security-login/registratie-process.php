@@ -15,14 +15,14 @@ $messageContainer = "";
 			{
 				$db = new PDO('mysql:host=localhost;dbname=opdracht-security-login', 'root', 'root');
 
-				$querystring = 	'SELECT * 
+				$queryCheckMail = 	'SELECT * 
 									FROM users 
 									WHERE email = :email';
-				$statement = $db->prepare($querystring);
-				$statement->bindParam(':email', $email);
-				$statement->execute();
+				$checkMailState = $db->prepare($queryCheckMail);
+				$checkMailState->bindParam(':email', $email);
+				$checkMailState->execute();
 
-			    while ( $row = $statement->fetch( PDO::FETCH_ASSOC ) )
+			    while ( $row = $checkMailState->fetch( PDO::FETCH_ASSOC ) )
 			    {
 			    	$checkMails[]    =  $row;
 			    }
@@ -33,7 +33,7 @@ $messageContainer = "";
 			    }
 			    else
 			    {
-			    	echo "miauw";
+			    	createUser($email, $password);	
 			    }
 			    
 			}
@@ -68,6 +68,29 @@ $messageContainer = "";
 		}
 		return $password;
 		//header('Location: registratie-form.php');
+	}
+
+	function createUser($email, $paswoord)
+	{
+		$db = new PDO('mysql:host=localhost;dbname=opdracht-security-login', 'root', 'root');
+		$queryInsert =  'INSERT INTO users(email, salt, hashed_password, last_login_time)
+                  		VALUES ( :email, :salt, :hashed_password, NOW())';
+
+        $insertState = $db->prepare($queryInsert);
+        $salt = uniqid(mt_rand(), true);
+        $hashed_password = hash("sha512", ($salt . $paswoord));
+
+        $insertState->bindValue(":email", $email);
+        $insertState->bindValue(":salt", $salt);
+        $insertState->bindValue(":hashed_password", $hashed_password);
+
+        $insertSucces = $insertState->execute();
+        if($insertSucces)
+        {
+        	$cookieVal = $email . "," . hash("sha512", $email) . $salt;
+        	setcookie( "authenticated", $cookieVal, time() + 2592000 );
+        	header("Location: dashboard.php");
+        }
 	}
 
 ?>
