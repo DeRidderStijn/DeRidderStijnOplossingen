@@ -2,7 +2,7 @@
 	session_start();
 	$email = "";
 	$pass = "";
-	$messageContainer;
+	$messageContainer = "";
 	if ( isset( $_SESSION["registratie"]))
 	{	
 		$email = $_SESSION["registratie"]["email"];
