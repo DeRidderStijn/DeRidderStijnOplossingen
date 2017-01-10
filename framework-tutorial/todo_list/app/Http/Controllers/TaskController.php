@@ -15,7 +15,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::orderBy('id', 'desc')->get();
+        $tasks = Task::orderBy('id', 'desc')->paginate(5);
 
         return view('tasks.index')->with('storedTasks', $tasks);
     }
@@ -48,7 +48,7 @@ class TaskController extends Controller
 
         $task->save();
 
-        Session::flash('succes', 'New task has been succesfully added');
+        Session::flash('success', 'New task has been succesfully added');
 
         return redirect()->route('tasks.index');
     }
@@ -72,7 +72,8 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        //
+        $task = Task::find($id);
+        return view('tasks.edit')->with('taskUnderEdit', $task);
     }
 
     /**
@@ -84,7 +85,14 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'updatedTaskName' => 'required|min:5|max:255',
+            ]);
+        $task = Task::find($id);
+        $task->name = $request->updatedTaskName;
+        $task->save();
+        Session::flash('success', 'task #'. $id . 'has been succesfully updated.');
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -98,7 +106,7 @@ class TaskController extends Controller
         $task = Task::find($id);
 
         $task->delete();
-
+        Session::flash('success', 'task #' . $id . ' has been succesfully deleted');
         return redirect()->route('tasks.index');
     }
 }

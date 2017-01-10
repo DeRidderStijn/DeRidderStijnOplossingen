@@ -13,10 +13,10 @@
 				<h1>Todo List</h1>
 			</div>
 
-			{{-- display succes message --}}
-			@if (Session::has('succes'))
+			{{-- display success message --}}
+			@if (Session::has('success'))
 				<div class="alert alert-success">
-					<strong>Succes:</strong> {{ Session::get('succes') }}
+					<strong>Success:</strong> {{ Session::get('success') }}
 				</div>
 			@endif
 			{{-- dispaly error message --}}
@@ -30,7 +30,7 @@
 					</ul>
 				</div>
 			@endif
-			<div class="row">
+			<div class="row" style="margin-top: 10px; margin-bottom: 10px;">
 				<form acton="{{ route('tasks.store')}}" method="POST">
 					{{ csrf_field()}}
 					<div class="col-md-9">
@@ -56,7 +56,7 @@
 					<tr>
 						<th>{{ $storedTask->id}}</th>
 						<td>{{ $storedTask->name}}</td>
-						<td>Edit</td>
+						<td><a href="{{ route('tasks.edit', ['tasks'=>$storedTask->id]) }}" class="btn btn-default">Edit</a></td>
 						<td>
 							<form action=" {{ route('tasks.destroy', ['taks'=>$storedTask->id]) }}" method="POST">
 								{{ csrf_field()}}
@@ -69,6 +69,10 @@
 				</tbody>
 			</table>
 		@endif
+
+		<div class="row text-center">
+			{{ $storedTasks->links() }}
+		</div>
 	</div>
 </body>
 </html>
