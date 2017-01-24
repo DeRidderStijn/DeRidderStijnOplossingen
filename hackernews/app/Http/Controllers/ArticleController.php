@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
-
+use Session;
 class ArticleController extends Controller
 {
     /**
@@ -14,7 +14,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return view('articles.index');
+        $articles = Article::orderBy('id', 'desc')->get();
+        return view('articles.index')->with('storedArticles', $articles);
     }
 
     /**
@@ -48,6 +49,9 @@ class ArticleController extends Controller
         $article->points = 0;
         $article->isDeleted = "FALSE";
         $article->save();
+
+        Session::flash('success', 'New article has been succesfully created!');
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -69,7 +73,8 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $article = Article::find($id);
+        return view('articles.edit')->with('articleUnderEdit', $article);
     }
 
     /**
@@ -81,9 +86,32 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'updatedArticleTitle' => 'required|min:5|max:255',
+            'updatedArticleLink' => 'required',
+            ]);
+        $article = Article::find($id);
+        $article->title = $request->updatedArticleTitle;
+        $article->link = $request->updatedArticleLink;
+
+        $article->save();
+        Session::flash('success', 'Article has been successfully updated');
+        return redirect()->route('articles.index');
     }
 
+    public function upvote(Request $request, $id)
+    {
+        $article = Article::find($id);
+        $article->points += 1;
+        $article->save();
+        Session::flash('succes', 'Upvote wuz a great succes');
+
+        return redirect()->route('articles.index');
+    }
+    public function downvote(Request $request, $id)
+    {
+
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -92,6 +120,9 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $article = Article::find($id);
+        $article->delete();
+        Session::flash('success', 'Article has been successfully deleted');
+        return redirect()->route('articles.index');
     }
 }

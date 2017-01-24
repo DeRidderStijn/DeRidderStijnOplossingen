@@ -17,6 +17,24 @@
     	<div class="row">
     		<h1>Articles</h1>
     	</div>
+        {{-- display succes message --}}
+        @if (Session::has('success'))
+            <div class="alert alert-succes">
+                <strong>Succes:</strong> {{ Session::get('success') }}
+            </div>
+        @endif
+        {{-- display error message --}}
+        @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <strong>Error:</strong>
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li> {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+
+        @endif
     	<div class="row">
     		<form action="{{ route('articles.store') }}" method="POST">
     			{{ csrf_field() }}
@@ -31,6 +49,46 @@
     			</div>
     		</form>
     	</div>
+
+        {{-- display stored articles--}}
+        @if (count($storedArticles) > 0)
+            <table class="table">
+                <thead>
+                    <th>Title</th>
+                    <th>Link</th>
+                    <th>points</th>
+                    <th>upvote</th>
+                    <th>downvote</th>
+                    <th>edit</th>
+                    <th>delete</th>
+                </thead>
+
+                <tbody>
+                    @foreach ($storedArticles as $storedArticle)
+                        <tr>
+                            <th>{{ $storedArticle->title }}</th>
+                            <td>{{ $storedArticle->link }}</td>
+                            <td>{{ $storedArticle->points }}</td>
+                            <td>
+                               
+                            </td>
+                            <td>downvote</td>
+                            <td>
+                                <a href="{{ route('articles.edit', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">edit</a>
+                            </td>
+                            <td>
+                                <form action="{{ route('articles.destroy', ['articles'=>$storedArticle->id]) }}" method="POST">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="submit" class="btn btn-danger" value="delete">
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+        @endif
     </div>
 </div>
 </body>
