@@ -15,4 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/articles/{articles}/upvote', 'ArticleController@upvote')->name('articles.upvote');
+Route::get('/articles/{articles}/downvote', 'ArticleController@downvote')->name('articles.downvote');
 Route::resource('/articles', 'ArticleController');

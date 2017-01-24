@@ -70,9 +70,11 @@
                             <td>{{ $storedArticle->link }}</td>
                             <td>{{ $storedArticle->points }}</td>
                             <td>
-                               
+                               <a href="{{ route('articles.upvote', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">upvote</a>
                             </td>
-                            <td>downvote</td>
+                            <td>
+                                <a href="{{ route('articles.downvote', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">downvote</a>
+                            </td>
                             <td>
                                 <a href="{{ route('articles.edit', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">edit</a>
                             </td>

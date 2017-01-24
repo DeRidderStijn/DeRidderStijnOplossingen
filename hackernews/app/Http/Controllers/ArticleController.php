@@ -99,18 +99,23 @@ class ArticleController extends Controller
         return redirect()->route('articles.index');
     }
 
-    public function upvote(Request $request, $id)
+    public function upvote($id)
     {
         $article = Article::find($id);
         $article->points += 1;
         $article->save();
-        Session::flash('succes', 'Upvote wuz a great succes');
+        Session::flash('success', 'Downvote was a succes');
 
         return redirect()->route('articles.index');
     }
     public function downvote(Request $request, $id)
     {
+        $article = Article::find($id);
+        $article->points -= 1;
+        $article->save();
+        Session::flash('success', 'Downvote was a succes');
 
+        return redirect()->route('articles.index');
     }
     /**
      * Remove the specified resource from storage.
