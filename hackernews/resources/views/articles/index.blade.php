@@ -57,6 +57,7 @@
                     <th>Title</th>
                     <th>Link</th>
                     <th>points</th>
+                    <th>comments</th>
                     <th>upvote</th>
                     <th>downvote</th>
                     <th>edit</th>
@@ -69,6 +70,9 @@
                             <th>{{ $storedArticle->title }}</th>
                             <td>{{ $storedArticle->link }}</td>
                             <td>{{ $storedArticle->points }}</td>
+                            <td>
+                                <a href="{{ route('comments.index', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">comments</a>
+                            </td>
                             <td>
                                <a href="{{ route('articles.upvote', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">upvote</a>
                             </td>
