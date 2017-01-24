@@ -105,6 +105,9 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = Comment::find($id);
+        $comment->delete();
+        Session::flash('success', 'Comment has been successfully deleted');
+        return redirect()->back();
     }
 }
