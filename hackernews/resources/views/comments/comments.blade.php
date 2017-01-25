@@ -12,73 +12,88 @@
     <title>Hackernews app</title>
 </head>
 <body>
+    @include('layouts.app')
 <div class="container">
-     @extends('layouts.app')
-    <div "class= col-md-offset-2 col-md-8">
-        <div class="row">
-            <h1>Articles</h1>
-        </div>
-        {{-- display succes message --}}
-        @if (Session::has('success'))
-            <div class="alert alert-succes">
-                <strong>Succes:</strong> {{ Session::get('success') }}
-            </div>
-        @endif
-        {{-- display error message --}}
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <strong>Error:</strong>
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li> {{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
 
-        @endif
-        <div class="row">
-            <form action="{{ route('comments.store') }}" method="POST">
-                {{ csrf_field() }}
-                <div class="col-md-9">
-                    <input type="text" name="newCommentText" class="form-control">
-                    <input type="hidden" name="artikelID" value="{{ $artikelid}}"
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">            
+            <div class="breadcrumb">
+                <a href="{{ url('/') }}">← back to overview</a>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading clearfix">
+                        Article: Goed bezig manne!!
                 </div>
-                <div class="col-md-3">
-                    <input type="submit" class="btn btn-primary btn-block" value="New comment">
+
+                <div class="panel-content">
+                <div class="vote">
+                    <form action="http://pascalculator.be/hackernews/public/vote/up" method="POST" class="form-inline upvote">
+                        <input type="hidden" name="_token" value="5tn1AvjTnKKSPgsytTTKG3ouwE3cdaJpW8rXNXPn">
+                        <button name="article_id"value="16">
+                            <i class="fa fa-btn fa-caret-up" title="upvote"></i>
+                        </button>
+                    </form>
+                    <form action="http://pascalculator.be/hackernews/public/vote/down" method="POST" class="form-inline downvote">
+                    <input type="hidden" name="_token" value="5tn1AvjTnKKSPgsytTTKG3ouwE3cdaJpW8rXNXPn">
+                        <button name="article_id"value="16">
+                            <i class="fa fa-btn fa-caret-down" title="downvote"></i>
+                        </button>
+                    </form>
                 </div>
-            </form>
-        </div>
+                <div class="url">
+                    <a href="https://github.com/pascalculator/kdg-web-backend-2016-2017" class="urlTitle">Goed bezig manne!!</a>
+                </div> 
+                <div class="info">
+                    2 points  | posted by jajaja | 0 comments
+                </div>
+                <div class="comments">
+                    <div>   
+                    <p>No comments yet</p>
+                    </div>
+
+
+        <form action="{{ route('comments.store') }}" method="POST" class="form-horizontal">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="body" class="col-sm-3 control-label">Comment</label>
+                        <div class="col-sm-6">
+                            <textarea type="text" name="newCommentText" id="newCommentText" class="form-control"></textarea>
+                            <input type="hidden" name="artikelID" value="{{ $artikelid }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-6">
+                            <button type="submit" class="btn btn-default">
+                                <i class="fa fa-plus"></i> Add comment
+                            </button>
+                        </div>
+                    </div>
+                </form>
 
         {{-- display stored comments for article id--}}
         @if (count($storedComments) > 0)
-            <table class="table">
-                <thead>
-                    <th>Comment</th>
-                    <th>Date</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                    
-                </thead>
+        <ul>
+            @foreach ($storedComments as $storedComment)
+                      
 
-                <tbody>
-                    @foreach ($storedComments as $storedComment)
-                        <tr>
-                            <th>{{ $storedComment->text }}</th>
-                            <td>{{ $storedComment->created_at }}</td>
-                            @if ( (Auth::id()) == $storedComment->userID)
-                            <td>
-                                <a href="{{ route('comments.edit', ['comments'=>$storedComment->id]) }}" class="btn btn-default">edit</a>
-                            </td>
-                            <td>
-                                <a href="{{ route('comments.deleteComment', ['articles'=>$storedComment->id]) }}" class="btn btn-default">delete</a>
-                            </td>
-                            @endif
-                            
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-
+            <li>
+                <div class="comment-body">
+                    {{ $storedComment->text }}
+                </div>
+                <div class="comment-info">
+                    Posted by someuser on {{ $storedComment->created_at }}
+                    @if ((Auth::id()) == $storedComment->userID)
+                <a href="{{ route('comments.edit', ['comments'=>$storedComment->id]) }}" class ="btn btn-primary btn-xs edit-btn">edit</a>
+                <a href="{{ route('comments.deleteComment', ['articles'=>$storedComment->id]) }}" class ="btn btn-danger btn-xs edit-btn">
+                        <i class="fa fa-btn fa-trash" title="delete"></i> delete 
+                </a>
+                    @endif
+                </div>
+            </li>
+                
+            @endforeach  
+        </ul>
         @endif
     </div>
 </div>

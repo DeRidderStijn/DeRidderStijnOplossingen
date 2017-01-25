@@ -12,9 +12,9 @@
     <title>Hackernews app</title>
 </head>
 <body>
- 
+  @include('layouts.app')
 <div class="container">
-    @extends('layouts.app')
+   
     <div "class= col-md-offset-2 col-md-8">
     	<div class="row">
     		<h1>Articles</h1>
@@ -40,50 +40,55 @@
     	
 
         {{-- display stored articles--}}
+         <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">Article overview</div>
+
+                <div class="panel-content">
+
         @if (count($storedArticles) > 0)
-            <table class="table">
-                <thead>
-                    <th>Title</th>
-                    <th>Link</th>
-                    <th>points</th>
-                    <th>comments</th>
-                    <th>upvote</th>
-                    <th>downvote</th>
-                    <th>edit</th>
-                    <th>delete</th>
-                </thead>
+            <ul class="article-overview">
+            @foreach ($storedArticles as $storedArticle)
+                <li>
+                    <div class="vote">
+                        <div class="form-inline upvote">
+                            <a href="{{ route('articles.upvote', ['articles'=>$storedArticle->id]) }}">
+                                <button>
+                                <i class="fa fa-btn fa-caret-up" title="upvote"></i>
+                                </button>
+                            </a>
+                        </div>
+                                                    
+                        <div class="form-inline downvote">
+                             <a href="{{ route('articles.downvote', ['articles'=>$storedArticle->id]) }}">
+                                <button>
+                                <i class="fa fa-btn fa-caret-down" title="downvote"></i>
+                            </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="url">
+                        <a href="{{ $storedArticle->link }}" class="urlTitle">{{ $storedArticle->title }}</a>
+                        @if ( Auth::id() == $storedArticle->userID)
+                         <a href="{{ route('articles.edit', ['articles'=>$storedArticle->id]) }}" class="btn btn-primary btn-xs edit-btn">edit</a>
+                        @endif
+                    </div> 
+                    <div class="info">
+                        {{ $storedArticle->points }} points  | posted by {{ Auth::id() }} | <a href="{{ route('comments.index', ['articles'=>$storedArticle->id]) }}">amount of comments</a>
+                    </div>
+                </li>        
 
-                <tbody>
-                    @foreach ($storedArticles as $storedArticle)
-                        <tr>
-                            <th>{{ $storedArticle->title }}</th>
-                            <td>{{ $storedArticle->link }}</td>
-                            <td>{{ $storedArticle->points }}</td>
-                            <td>
-                                <a href="{{ route('comments.index', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">comments</a>
-                            </td>
-                            <td>
-                               <a href="{{ route('articles.upvote', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">upvote</a>
-                            </td>
-                            <td>
-                                <a href="{{ route('articles.downvote', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">downvote</a>
-                            </td>
-                            @if ( (Auth::id()) == $storedArticle->userID) 
-                            <td>
-                                <a href="{{ route('articles.edit', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">edit</a>
-                            </td>
-                            <td>
-                                <a href="{{ route('articles.deleteArticle', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">delete</a>
-                            </td>
-                            @endif
-                            
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
 
+            @endforeach
+            </ul>
         @endif
-    </div>
+
+
+                </div>
+
+            </div>
+        </div>
 </div>
-</body>
-</html>

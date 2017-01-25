@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div class="container">
-		 @extends('layouts.app')
+		 @include('layouts.app')
 		<div class="col-md-offset-2 col-md-8">
 			<div class="row">
 				<h1>Todo List</h1>

@@ -17,7 +17,7 @@ class CommentController extends Controller
      */
     public function index($id)
     {
-       
+        
         $comments = DB::table('comments')->orderBy('id')->where(['artikelID' => $id, 'isDeleted' => 'FALSE'])->get();
         return view('comments.comments')
             ->with('storedComments', $comments)

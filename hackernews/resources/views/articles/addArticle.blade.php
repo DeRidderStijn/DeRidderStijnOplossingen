@@ -27,7 +27,7 @@
                     <input type="submit" class="btn btn-primary btn-block" value="New Article">
                 </div>
             </form>
-        </div>    <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}">
+        </div>    
 
 </body>
 </html>
