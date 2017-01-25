@@ -17,7 +17,7 @@ class CommentController extends Controller
     public function index($id)
     {
        
-        $comments = DB::table('comments')->orderBy('id')->where('artikelID', $id)->get();
+        $comments = DB::table('comments')->orderBy('id')->where(['artikelID' => $id, 'isDeleted' => 'FALSE'])->get();
         return view('comments.comments')
             ->with('storedComments', $comments)
             ->with('artikelid',$id);
@@ -105,9 +105,16 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
+        //
+    }
+
+    public function deleteComment($id)
+    {
         $comment = Comment::find($id);
-        $comment->delete();
-        Session::flash('success', 'Comment has been successfully deleted');
+        $comment->isDeleted = "TRUE";
+        $comment->save();
+        Session::flash('success', 'Delete was a succes');
+
         return redirect()->back();
     }
 }

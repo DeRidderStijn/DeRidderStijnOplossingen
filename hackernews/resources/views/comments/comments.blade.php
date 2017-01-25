@@ -68,12 +68,9 @@
                                 <a href="{{ route('comments.edit', ['comments'=>$storedComment->id]) }}" class="btn btn-default">edit</a>
                             </td>
                             <td>
-                              <form action="{{ route('comments.destroy', ['comments'=>$storedComment->id]) }}" method="POST">
-                                    {{ csrf_field() }}
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="submit" class="btn btn-danger" value="delete">
-                                </form>
+                                <a href="{{ route('comments.deleteComment', ['articles'=>$storedComment->id]) }}" class="btn btn-default">delete</a>
                             </td>
+                            
                         </tr>
                     @endforeach
                 </tbody>

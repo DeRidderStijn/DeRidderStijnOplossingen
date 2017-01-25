@@ -83,11 +83,7 @@
                                 <a href="{{ route('articles.edit', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">edit</a>
                             </td>
                             <td>
-                                <form action="{{ route('articles.destroy', ['articles'=>$storedArticle->id]) }}" method="POST">
-                                    {{ csrf_field() }}
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="submit" class="btn btn-danger" value="delete">
-                                </form>
+                                <a href="{{ route('articles.deleteArticle', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">delete</a>
                             </td>
                         </tr>
                     @endforeach

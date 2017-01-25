@@ -14,7 +14,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::orderBy('id', 'desc')->get();
+        $articles = Article::orderBy('id', 'desc')->where("isDeleted", "FALSE")->get();
         return view('articles.index')->with('storedArticles', $articles);
     }
 
@@ -125,9 +125,16 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
+       //
+    }
+
+    public function deleteArticle($id)
+    {
         $article = Article::find($id);
-        $article->delete();
-        Session::flash('success', 'Article has been successfully deleted');
+        $article->isDeleted = "TRUE";
+        $article->save();
+        Session::flash('success', 'Delete was a succes');
+
         return redirect()->route('articles.index');
     }
 }
