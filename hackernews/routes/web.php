@@ -23,3 +23,11 @@ Route::get('/comments/{comment}/deleteComment', 'CommentController@deleteComment
 Route::get('/comments/{articles}/index', 'CommentController@index')->name('comments.index');
 Route::resource('/articles', 'ArticleController');
 Route::resource('/comments', 'CommentController', ['except' => ['index']]);
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+Route::get('/', 'ArticleController@index');
+
+Route::get('/add', function () {
+	return view('articles/addArticle');
+});

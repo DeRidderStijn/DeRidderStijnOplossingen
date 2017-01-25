@@ -17,6 +17,7 @@ class CreateCommentsTable extends Migration
             $table->increments('id');
             $table->integer('artikelID');
             $table->string('text');
+            $table->integer('userID');
             $table->string('isDeleted');
             $table->timestamps();
         });

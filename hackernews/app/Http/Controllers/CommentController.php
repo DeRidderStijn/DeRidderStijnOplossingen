@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Comment;
 use Session;
 use DB;
+use Auth;
 
 class CommentController extends Controller
 {
@@ -50,6 +51,7 @@ class CommentController extends Controller
         $comment->text = $request->newCommentText;
         $comment->isDeleted = "FALSE";
         $comment->artikelID = $request->artikelID;
+        $comment->userID = Auth::id();
         $comment->save();
 
         return redirect()->back();

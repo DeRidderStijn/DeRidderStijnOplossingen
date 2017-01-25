@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Article;
 use Session;
+use Auth;
 class ArticleController extends Controller
 {
     /**
@@ -48,6 +49,7 @@ class ArticleController extends Controller
         $article->link = $request->newArticleLink;
         $article->points = 0;
         $article->isDeleted = "FALSE";
+        $article->userID = Auth::id();
         $article->save();
 
         Session::flash('success', 'New article has been succesfully created!');
@@ -136,5 +138,9 @@ class ArticleController extends Controller
         Session::flash('success', 'Delete was a succes');
 
         return redirect()->route('articles.index');
+    }
+    public function addArticle()
+    {
+        return view('articles.index');
     }
 }

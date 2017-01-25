@@ -8,11 +8,13 @@
 
     {{-- bootstrap js CDN --}}
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}">
     <title>Hackernews app</title>
 </head>
 <body>
+ 
 <div class="container">
+    @extends('layouts.app')
     <div "class= col-md-offset-2 col-md-8">
     	<div class="row">
     		<h1>Articles</h1>
@@ -35,20 +37,7 @@
             </div>
 
         @endif
-    	<div class="row">
-    		<form action="{{ route('articles.store') }}" method="POST">
-    			{{ csrf_field() }}
-    			<div class="col-md-9">
-					<input type="text" name="newArticleTitle" class="form-control">
-    			</div>
-    			<div class="col-md-9">
-					<input type="text" name="newArticleLink" class="form-control">
-    			</div>
-    			<div class="col-md-3">
-    				<input type="submit" class="btn btn-primary btn-block" value="New Article">
-    			</div>
-    		</form>
-    	</div>
+    	
 
         {{-- display stored articles--}}
         @if (count($storedArticles) > 0)
@@ -79,12 +68,15 @@
                             <td>
                                 <a href="{{ route('articles.downvote', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">downvote</a>
                             </td>
+                            @if ( (Auth::id()) == $storedArticle->userID) 
                             <td>
                                 <a href="{{ route('articles.edit', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">edit</a>
                             </td>
                             <td>
                                 <a href="{{ route('articles.deleteArticle', ['articles'=>$storedArticle->id]) }}" class="btn btn-default">delete</a>
                             </td>
+                            @endif
+                            
                         </tr>
                     @endforeach
                 </tbody>

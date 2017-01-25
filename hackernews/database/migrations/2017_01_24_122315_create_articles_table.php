@@ -18,6 +18,7 @@ class CreateArticlesTable extends Migration
             $table->string('title');
             $table->string('link');
             $table->integer('points');
+            $table->integer('userID');
             $table->string('isDeleted');
             $table->timestamps();
         });

@@ -7,7 +7,9 @@
 	<title>Todo List App</title>
 </head>
 <body>
+	@extends('layouts.app')
 	<div class="container">
+
 		<div class="col-md-offset-2 col-md-8">
 			<div class="row">
 				<h1>Todo List</h1>

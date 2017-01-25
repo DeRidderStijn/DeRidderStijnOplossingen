@@ -8,11 +8,12 @@
 
     {{-- bootstrap js CDN --}}
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}">
     <title>Hackernews app</title>
 </head>
 <body>
 <div class="container">
+     @extends('layouts.app')
     <div "class= col-md-offset-2 col-md-8">
         <div class="row">
             <h1>Articles</h1>
@@ -64,12 +65,14 @@
                         <tr>
                             <th>{{ $storedComment->text }}</th>
                             <td>{{ $storedComment->created_at }}</td>
+                            @if ( (Auth::id()) == $storedComment->userID)
                             <td>
                                 <a href="{{ route('comments.edit', ['comments'=>$storedComment->id]) }}" class="btn btn-default">edit</a>
                             </td>
                             <td>
                                 <a href="{{ route('comments.deleteComment', ['articles'=>$storedComment->id]) }}" class="btn btn-default">delete</a>
                             </td>
+                            @endif
                             
                         </tr>
                     @endforeach
