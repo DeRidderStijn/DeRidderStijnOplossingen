@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Article;
 use Session;
 use Auth;
+use App\Comment;
+use DB;
 class ArticleController extends Controller
 {
     /**
@@ -16,7 +18,19 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::orderBy('id', 'desc')->where("isDeleted", "FALSE")->get();
-        return view('articles.index')->with('storedArticles', $articles);
+        $commentscount = DB::table('comments')
+            ->selectRaw('*, count(*)')
+            ->groupBy('artikelID');
+
+
+
+        return view('articles.index')
+        ->with('storedArticles', $articles)
+        ->with('commentCount', $commentscount);
+
+        /*
+            $reserves = DB::table('reserves')->selectRaw('*, count(*)')->groupBy('day');
+        */
     }
 
     /**

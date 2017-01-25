@@ -21,31 +21,7 @@
                 <a href="{{ url('/') }}">← back to overview</a>
             </div>
             <div class="panel panel-default">
-                <div class="panel-heading clearfix">
-                        Article: Goed bezig manne!!
-                </div>
-
-                <div class="panel-content">
-                <div class="vote">
-                    <form action="http://pascalculator.be/hackernews/public/vote/up" method="POST" class="form-inline upvote">
-                        <input type="hidden" name="_token" value="5tn1AvjTnKKSPgsytTTKG3ouwE3cdaJpW8rXNXPn">
-                        <button name="article_id"value="16">
-                            <i class="fa fa-btn fa-caret-up" title="upvote"></i>
-                        </button>
-                    </form>
-                    <form action="http://pascalculator.be/hackernews/public/vote/down" method="POST" class="form-inline downvote">
-                    <input type="hidden" name="_token" value="5tn1AvjTnKKSPgsytTTKG3ouwE3cdaJpW8rXNXPn">
-                        <button name="article_id"value="16">
-                            <i class="fa fa-btn fa-caret-down" title="downvote"></i>
-                        </button>
-                    </form>
-                </div>
-                <div class="url">
-                    <a href="https://github.com/pascalculator/kdg-web-backend-2016-2017" class="urlTitle">Goed bezig manne!!</a>
-                </div> 
-                <div class="info">
-                    2 points  | posted by jajaja | 0 comments
-                </div>
+                
                 <div class="comments">
                     <div>   
                     <p>No comments yet</p>

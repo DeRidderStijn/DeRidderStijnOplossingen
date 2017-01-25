@@ -7,12 +7,12 @@
 	<title>Todo List App</title>
 </head>
 <body>
-	@extends('layouts.app')
+	@include('layouts.app')
 	<div class="container">
 
 		<div class="col-md-offset-2 col-md-8">
 			<div class="row">
-				<h1>Todo List</h1>
+				<h1>Article</h1>
 			</div>
 
 			{{-- display success message --}}
@@ -32,7 +32,9 @@
 					</ul>
 				</div>
 			@endif
-
+			<a href="{{ route('articles.deleteArticle', ['articles'=>$articleUnderEdit->id]) }}" class="btn btn-danger btn-xs pull-right">
+                        <i class="fa fa-btn fa-trash" title="delete"></i> delete article
+            </a>
 			<div class="row">
 				<form action="{{ route('articles.update', [$articleUnderEdit->id]) }}" method="POST">
 					{{ csrf_field() }}
@@ -45,7 +47,7 @@
 					</div>
 					<div class="form-group">
 						<input type="submit" value="Save Changes" class="btn btn-success btn-lg">
-						<a href="" class="btn btn-danger btn-lg pull-right">Go Back</a>
+						<a href="{{ url('/') }}" class="btn btn-danger btn-lg pull-right">Go Back</a>
 					</div>
 				</form>
 			</div>

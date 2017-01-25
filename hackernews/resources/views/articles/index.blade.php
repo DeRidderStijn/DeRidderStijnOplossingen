@@ -12,7 +12,7 @@
     <title>Hackernews app</title>
 </head>
 <body>
-  @include('layouts.app')
+    @include('layouts.app')
 <div class="container">
    
     <div "class= col-md-offset-2 col-md-8">
@@ -85,7 +85,7 @@
             @endforeach
             </ul>
         @endif
-
+        
 
                 </div>
 
