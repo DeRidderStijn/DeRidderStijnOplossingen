@@ -57,7 +57,7 @@
                         <div class="form-inline upvote">
                             <a href="{{ route('articles.upvote', ['articles'=>$storedArticle->id]) }}">
                                 <button>
-                                <i class="fa fa-btn fa-caret-up" title="upvote"></i>
+                                <i class="fa fa-btn fa-caret-up" title="upvote"></i>+
                                 </button>
                             </a>
                         </div>
@@ -65,7 +65,7 @@
                         <div class="form-inline downvote">
                              <a href="{{ route('articles.downvote', ['articles'=>$storedArticle->id]) }}">
                                 <button>
-                                <i class="fa fa-btn fa-caret-down" title="downvote"></i>
+                                <i class="fa fa-btn fa-caret-down" title="downvote"></i>-
                             </button>
                             </a>
                         </div>

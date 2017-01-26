@@ -19,9 +19,11 @@ class CommentController extends Controller
     {
         
         $comments = DB::table('comments')->orderBy('id')->where(['artikelID' => $id, 'isDeleted' => 'FALSE'])->get();
+        $article = DB::table('articles')->orderBy('id')->where(['id'=> $id])->get();
         return view('comments.comments')
             ->with('storedComments', $comments)
-            ->with('artikelid',$id);
+            ->with('artikelid',$id)
+            ->with('selectedArticle', $article);
     }
 
     /**
